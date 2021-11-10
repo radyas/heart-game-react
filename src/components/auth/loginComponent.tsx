@@ -1,7 +1,14 @@
 import React from "react";
+import {Firebase} from "../../utils/firebase";
 
-export class LoginComponent extends React.Component<{ }>{
+interface LoginProps{
+    firebase: Firebase
+}
+
+export class LoginComponent extends React.Component<LoginProps>{
     render() {
-        return undefined;
+        return(
+            'asdasd'
+        )
     }
 }

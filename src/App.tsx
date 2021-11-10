@@ -1,17 +1,28 @@
 import React from 'react';
-import {Firebase} from "./utils/firebase";
+import { Firebase } from "./utils/firebase";
+import { LoginComponent } from "./components/auth/loginComponent";
+import { Routes, Route } from "react-router-dom";
 
-export default class App extends React.Component<{}>{
 
+export default class App<T> extends React.Component<T> {
+    fb: Firebase
 
+    constructor(props: T) {
+        super(props);
+        this.fb = new Firebase()
 
+    }
     render() {
-        const fb = new Firebase()
-        fb.login('yasirusellahewa@gmail.com', '121212')
+        if(this.fb.auth_user()){
+            return <LoginComponent firebase={this.fb}/>
+        }
         return (
-            <div className="container">
-sdfsd
-            </div>
+                <div>
+                    <Routes>
+                        <Route path="/login" element={<LoginComponent firebase={this.fb}/>} />
+                        <Route path="/" element={<LoginComponent firebase={this.fb}/>} />
+                    </Routes>
+                </div>
         );
     }
 
