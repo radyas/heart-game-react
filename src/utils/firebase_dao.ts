@@ -8,17 +8,19 @@ export class Firebase_Dao {
     }
 
     find_by_id(collection: string, id: string){
-        let obj = null;
-        this._db
+        return this._db
             .collection(collection)
-            .where("uid", "==", id)
+            .where("id", "==", id)
             .get()
             .then(async (res) => {
-                obj = await res.docs[0].data()
+                return res.docs[0].data()
             })
             .catch(error => {
                 console.log(error)
             })
-        return obj
+    }
+
+    add_object(collection: string, data: any){
+        return this._db.collection(collection).add(data)
     }
 }

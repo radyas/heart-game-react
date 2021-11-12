@@ -1,28 +1,58 @@
 import React from 'react';
-import { Firebase } from "./utils/firebase";
 import { LoginComponent } from "./components/auth/loginComponent";
-import { Routes, Route } from "react-router-dom";
+import {
+    Route,
+    Switch,
+    Redirect,
+} from "react-router-dom";
+import {authUser} from "./utils/firebase";
+import {SidebarComponent} from "./components/core/sidebarComponent";
+import {BaseComponent} from "./components/core/baseComponent";
+import Signup from "./pages/signup";
 
 
-export default class App<T> extends React.Component<T> {
-    fb: Firebase
+// @ts-ignore
+function PrivateRoute({ component: Component, authenticated, ...rest }) {
+    return (
+        <Route
+            {...rest}
+            render={(props) => authenticated === true
+                ? <Component {...props} />
+                : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
+        />
+    )
+}
 
-    constructor(props: T) {
-        super(props);
-        this.fb = new Firebase()
+export default class App extends React.Component {
+    state = {
+        authenticated: false,
+        loading: true,
+    };
 
+    componentDidMount() {
+        authUser.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({
+                    authenticated: true,
+                    loading: false,
+                });
+            } else {
+                this.setState({
+                    authenticated: false,
+                    loading: false,
+                });
+            }
+        })
     }
+
     render() {
-        if(this.fb.auth_user()){
-            return <LoginComponent firebase={this.fb}/>
-        }
         return (
-                <div>
-                    <Routes>
-                        <Route path="/login" element={<LoginComponent firebase={this.fb}/>} />
-                        <Route path="/" element={<LoginComponent firebase={this.fb}/>} />
-                    </Routes>
-                </div>
+            <Switch>
+                <Route exact path="/signup" component={Signup}/>
+                <Route exact path="/login" component={LoginComponent}/>
+                <PrivateRoute path="/profile" authenticated={this.state.authenticated} component={SidebarComponent}/>
+                <PrivateRoute path="/" authenticated={this.state.authenticated} component={BaseComponent}/>
+            </Switch>
         );
     }
 

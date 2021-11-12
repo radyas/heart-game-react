@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
+import {Container} from "react-bootstrap";
 
 ReactDOM.render(
+
     <React.StrictMode>
         <BrowserRouter>
-            <div className="container">
+            <Container>
                 <App />
-            </div>
+            </Container>
         </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')
