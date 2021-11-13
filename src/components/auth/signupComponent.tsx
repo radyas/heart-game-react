@@ -38,7 +38,7 @@ export class SignUpComponent extends React.Component<any>{
         e.preventDefault()
         console.log(this.props)
         this.props.handleOnSubmit({
-            username: this.state.email,
+            email: this.state.email,
             firstName: this.state.first_name,
             lastName: this.state.last_name,
             password: this.state.password,

@@ -4,7 +4,7 @@ export class BaseComponent extends React.Component<any, any>{
     render() {
         return (
             <>
-                Base
+                Sidebar
             </>
         )
     }
