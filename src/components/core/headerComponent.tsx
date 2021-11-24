@@ -1,12 +1,19 @@
 import React from "react";
 import {logout} from "../../utils/auth";
+import { Link } from "react-router-dom";
+import {Dropdown} from "react-bootstrap";
+import {authUser} from "../../utils/firebase";
 
 export default class HeaderComponent extends React.Component<any, any>{
     history
+    user
 
     constructor(props: any) {
         super(props);
         this.history = props.history
+        this.user = authUser.user
+        this.handleOnClick = this.handleOnClick.bind(this)
+        this.handleOnClickProfile = this.handleOnClickProfile.bind(this)
     }
 
 
@@ -17,23 +24,35 @@ export default class HeaderComponent extends React.Component<any, any>{
             })
     }
 
+    handleOnClickProfile(){
+        this.history.push('/profile')
+    }
+
     render() {
         return (
-            <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-                <p className="navbar-brand col-md-3 col-lg-2 me-0 px-3">Company name</p>
-                <button className="navbar-toggler position-absolute d-md-none collapsed" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"/>
-                </button>
-                <input className="form-control form-control-dark w-100" type="text" placeholder="Search"
-                       aria-label="Search"/>
-                    <div className="navbar-nav">
-                        <div className="nav-item text-nowrap">
-                            <button className="nav-link px-3" onClick={this.handleOnClick}>Sign out</button>
-                        </div>
-                    </div>
+            <header className="p-2 border-bottom sticky-top bg-white">
+                <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-end">
+                    <Link to="/" className="text-dark text-decoration-none px-4">
+                        <h3>Hearts Game</h3>
+                    </Link>
+
+                    <div className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"/>
+
+                    <Dropdown className='text-end justify-content-end'>
+                        <Dropdown.Toggle variant="" id="dropdown-basic">
+                            {this.user?.firstName} {this.user?.lastName}
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={this.handleOnClickProfile}>Profile</Dropdown.Item>
+                            <Dropdown.Item onClick={this.handleOnClick}>Sign Out</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+
+                </div>
+
             </header>
+
         )
     }
 }

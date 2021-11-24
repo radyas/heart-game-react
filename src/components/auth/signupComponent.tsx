@@ -1,5 +1,5 @@
 import React from "react";
-import {User} from "../../utils/firebase";
+import {authUser, User} from "../../utils/firebase";
 
 
 export class SignUpComponent extends React.Component<any>{
@@ -19,7 +19,7 @@ export class SignUpComponent extends React.Component<any>{
         super(props);
         this.handleOnSubmit = this.handleOnSubmit.bind(this)
         this.handleOnChange = this.handleOnChange.bind(this)
-        this.user = props.hasOwnProperty('user') ? props.user : null
+        this.user = authUser.user
         this.title = props.hasOwnProperty('title') ? props.title : 'Register'
         this.props = props
     }
@@ -36,7 +36,6 @@ export class SignUpComponent extends React.Component<any>{
 
     async handleOnSubmit(e: any){
         e.preventDefault()
-        console.log(this.props)
         this.props.handleOnSubmit({
             email: this.state.email,
             firstName: this.state.first_name,

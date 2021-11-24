@@ -10,7 +10,7 @@ export interface User{
 
 export interface  AuthUser{
     auth: typeof firebase.auth
-    user: User | null
+    user: any
     isLoggedIn: boolean
 }
 

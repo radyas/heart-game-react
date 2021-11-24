@@ -6,7 +6,6 @@ import {
     Redirect,
 } from "react-router-dom";
 import {authUser} from "./utils/firebase";
-import {SidebarComponent} from "./components/core/sidebarComponent";
 import {BaseComponent} from "./components/core/baseComponent";
 import Signup from "./pages/signup";
 
@@ -17,7 +16,7 @@ function PrivateRoute({ component: Component, authenticated, ...rest }) {
         <Route
             {...rest}
             render={(props) => authenticated === true
-                ? <Component {...props} />
+                ? <Component {...props}/>
                 : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
         />
     )
@@ -50,8 +49,10 @@ export default class App extends React.Component {
             <Switch>
                 <Route exact path="/signup" component={Signup}/>
                 <Route exact path="/login" component={LoginComponent}/>
-                <PrivateRoute path="/profile" authenticated={this.state.authenticated} component={SidebarComponent}/>
-                <PrivateRoute path="/" authenticated={this.state.authenticated} component={BaseComponent}/>
+                <PrivateRoute path="/"
+                              authenticated={this.state.authenticated}
+                              component={BaseComponent}
+                />
             </Switch>
         );
     }

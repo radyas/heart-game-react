@@ -7,7 +7,7 @@ export class Firebase_Dao {
         this._db = firestore
     }
 
-    find_by_id(collection: string, id: string){
+    find_by_id(collection: string, id: string| undefined){
         return this._db
             .collection(collection)
             .where("id", "==", id)
@@ -20,7 +20,44 @@ export class Firebase_Dao {
             })
     }
 
-    add_object(collection: string, data: any){
-        return this._db.collection(collection).add(data)
+    find_by_key(collection: string, key: string, value: any){
+        return this._db
+            .collection(collection)
+            .where(key, "==", value)
+            .get()
     }
+
+    add_object(collection: string, data: any, id: boolean = true){
+        if(id)
+            return this._db.collection(collection).doc(data.id).set(data)
+        else
+            return this._db.collection(collection).doc().set(data)
+    }
+
+    update_object(collection: string, data: any, id: string){
+        return this._db.collection(collection).doc(id).update(data)
+    }
+
+    find_all(collection: string){
+        this._db
+            .collection(collection)
+            .get()
+            .then(res => {
+                return res.docs
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    get_last_item(collection: string, key: string, order: any = "desc"){
+        return this._db
+            .collection(collection)
+            .orderBy(key, order)
+            .limit(1)
+            .get()
+    }
+
+
+
 }

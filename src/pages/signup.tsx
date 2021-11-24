@@ -17,11 +17,11 @@ export default class Signup extends React.Component<{ }, any>{
     async handleOnSubmit(user_obj: any, history: any){
         let {password, ...user} = user_obj
         try{
-            let response = await signup(user.username, password)
+            let response = await signup(user.email, password)
             user.id = response.user?.uid
             let dao = new Firebase_Dao(db)
             await dao.add_object('users', user)
-            await login(user.username, password)
+            await login(user.email, password)
             history.push('/')
         }
         catch (error){
