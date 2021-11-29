@@ -36,7 +36,6 @@ export default function NewLevelComponent() {
                 setState(num, setAnswer, setUrl, setPicId)
             })
     }, [])
-
     const handleOnAdd = () => {
         let data = {
             id: 1,

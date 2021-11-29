@@ -39,15 +39,10 @@ export class Firebase_Dao {
     }
 
     find_all(collection: string){
-        this._db
+        return this._db
             .collection(collection)
+            .orderBy('id', 'asc')
             .get()
-            .then(res => {
-                return res.docs
-            })
-            .catch(error => {
-                console.log(error)
-            })
     }
 
     get_last_item(collection: string, key: string, order: any = "desc"){
