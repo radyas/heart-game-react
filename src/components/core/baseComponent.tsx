@@ -7,6 +7,7 @@ import {ProfileComponent} from "../auth/profileComponent";
 import {authUser} from "../../utils/firebase";
 import Levels from "../../pages/levels";
 import Statistics from "../../pages/statistics";
+import Users from "../../pages/users";
 
 export class BaseComponent extends React.Component<any, any>{
     user
@@ -28,6 +29,7 @@ export class BaseComponent extends React.Component<any, any>{
                         <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-3">
                             <Switch>
                                 <Route path="/profile" component={ProfileComponent}/>
+                                <Route path="/users" component={Users}/>
                                 <Route path="/levels" component={Levels}/>
                                 <Route path="/statistics" component={Statistics}/>
                                 <Route path="/" component={Home}/>

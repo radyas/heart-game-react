@@ -9,6 +9,7 @@ export class SignUpComponent extends React.Component<any>{
         email: '',
         password: '',
         confirm_password: '',
+        levels: [],
         admin: false,
     }
     user: User | null
@@ -41,6 +42,7 @@ export class SignUpComponent extends React.Component<any>{
             firstName: this.state.first_name,
             lastName: this.state.last_name,
             password: this.state.password,
+            levels: [],
             role: this.state.admin ? 'admin' : 'user',
         }, this.props.history)
     }

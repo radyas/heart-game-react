@@ -44,6 +44,7 @@ export class ProfileComponent extends React.Component<any, any>{
             lastName: this.state.last_name,
         }
         await dao.update_object('users', data, this.state.id)
+        alert('successful')
     }
 
     render() {
